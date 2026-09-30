@@ -1,0 +1,88 @@
+{% extends "users/user_base.html" %}
+
+{% block title %}Evidence Vault · Ingest · AEGIS-QR{% endblock %}
+{% block crumb %}Analyst Console / Evidence{% endblock %}
+{% block page_title %}Seal New Evidence{% endblock %}
+
+{% block content %}
+<div class="grid" style="grid-template-columns:.85fr 1.15fr;gap:1.5rem;align-items:start">
+
+  <!-- left: rationale -->
+  <div class="grid" style="gap:1.25rem">
+    <div class="card">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.4 9.4 8 10 4.6-.6 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/></svg>
+      </div>
+      <h2 style="font-size:1.3rem">Why seal the capture?</h2>
+      <p class="lead" style="font-size:.94rem">
+        Every symbol you assess is hashed on ingest. Later, re-submitting the same file lets
+        the platform prove it is byte-identical to the artefact that produced a verdict —
+        closing the gap between "we scanned something" and "we scanned <em>this</em>".
+      </p>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title"><span class="dot"></span>What gets stored</div>
+      <div class="kv">
+        <div class="kv-row"><span class="k">Original file</span><span class="v">immutable</span></div>
+        <div class="kv-row"><span class="k">Digest</span><span class="v mono">SHA-256</span></div>
+        <div class="kv-row"><span class="k">Uploading analyst</span><span class="v">{{ user_name|default:"—" }}</span></div>
+        <div class="kv-row"><span class="k">Timestamp</span><span class="v">server clock</span></div>
+        <div class="kv-row"><span class="k">Linked verdict</span><span class="v">on assessment</span></div>
+      </div>
+    </div>
+
+    <a class="btn btn-ghost btn-block" href="{% url 'threat_console' %}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3.2"/></svg>
+      Go to threat assessment
+    </a>
+  </div>
+
+  <!-- right: form -->
+  <div class="panel">
+    <div class="panel-title"><span class="dot"></span>Ingest a captured symbol</div>
+
+    {% if msg %}
+      <div class="alert alert-ok">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m9 12 2 2 4-4"/></svg>
+        <span>{{ msg }}</span>
+      </div>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="field">
+        <label for="file">Symbol or document</label>
+        <input class="input" type="file" id="file" name="file" required
+               accept=".jpg,.jpeg,.png,.pdf,.doc,.docx">
+        <p class="hint">
+          Supported: images (JPG, PNG) and documents (PDF, DOC, DOCX). Maximum 10&nbsp;MB.
+          A SHA-256 digest is computed server-side on receipt.
+        </p>
+      </div>
+
+      <div class="panel" style="margin:1.4rem 0;padding:1.1rem 1.2rem">
+        <div class="mc-meta" style="margin:0">
+          <span>Upload &amp; hash</span>
+          <b>→  immutable record</b>
+        </div>
+        <div class="pipe-line" style="position:relative;top:auto;bottom:auto;left:auto;width:100%;height:2px;transform:none;margin:.9rem 0;background:linear-gradient(90deg,rgba(34,211,238,.6),rgba(139,92,246,.4))"></div>
+        <p class="small muted mb-0" style="line-height:1.6">
+          Receive → digest → seal → link to verdict. Nothing in the chain is user-editable
+          after the moment of receipt.
+        </p>
+      </div>
+
+      <div class="btn-row">
+        <button type="submit" class="btn btn-primary btn-lg" style="flex:1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+          Upload &amp; seal
+        </button>
+        <a class="btn btn-ghost btn-lg" href="{% url 'user_homepage' %}">Cancel</a>
+      </div>
+    </form>
+  </div>
+
+</div>
+{% endblock %}

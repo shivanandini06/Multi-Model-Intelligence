@@ -1,0 +1,202 @@
+{% extends 'users/user_base.html' %}
+
+{% block title %}Dashboard · AEGIS-QR{% endblock %}
+{% block crumb %}Analyst Console{% endblock %}
+{% block page_title %}Assessment Dashboard{% endblock %}
+{% block nav_dash %}active{% endblock %}
+
+{% block content %}
+
+<!-- ============ WELCOME ============ -->
+<div class="card" style="margin-bottom:1.5rem;padding:0;overflow:hidden">
+  <div style="display:grid;grid-template-columns:1.35fr .65fr">
+
+    <div style="padding:clamp(1.5rem,3vw,2.4rem)">
+      <span class="hero-eyebrow" style="margin-bottom:1rem">
+        <span class="pulse"></span>
+        Session active
+      </span>
+
+      <h2 style="font-size:clamp(1.4rem,2.6vw,2rem);margin-bottom:.5rem">
+        Welcome back, <span class="grad-text">{{ user_name }}</span>
+      </h2>
+
+      <p class="lead" style="margin-bottom:1.4rem;font-size:.98rem">
+        The four-model bank is online and the fusion layer is calibrated. Submit a symbol or a
+        decoded destination to receive a fused, explainable verdict in under 200&nbsp;milliseconds.
+      </p>
+
+      <div class="btn-row">
+        <a class="btn btn-primary" href="{% url 'threat_console' %}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3.2"/></svg>
+          New assessment
+        </a>
+        <a class="btn btn-ghost" href="{% url 'home' %}#models">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg>
+          Model reference
+        </a>
+      </div>
+    </div>
+
+    <div style="padding:clamp(1.5rem,3vw,2.4rem);border-left:1px solid var(--stroke);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1rem;background:radial-gradient(circle at 50% 40%,rgba(34,211,238,.1),transparent 65%)">
+      {% if user_image %}
+        <img class="avatar avatar-lg" src="{{ user_image }}" alt="{{ user_name }}">
+      {% else %}
+        <div class="avatar avatar-lg" style="display:grid;place-items:center;background:var(--grad-primary);color:#05070f;font-weight:800;font-size:2rem">A</div>
+      {% endif %}
+      <div class="text-center">
+        <div style="font-weight:600">{{ user_name }}</div>
+        <div class="mono small muted">signed in {{ login_time }} IST</div>
+      </div>
+      <span class="badge badge-green">verified analyst</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ STATS ============ -->
+<div class="stat-grid" style="margin-bottom:1.5rem">
+  <div class="stat">
+    <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3.2"/></svg></div>
+    <div class="lbl">Scans today</div>
+    <div class="num"><span data-count="24" data-decimals="0">0</span></div>
+    <div class="trend">+6 vs. yesterday</div>
+  </div>
+
+  <div class="stat">
+    <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.4 9.4 8 10 4.6-.6 8-5 8-10V6z"/><path d="M12 8v5"/></svg></div>
+    <div class="lbl">Threats blocked</div>
+    <div class="num"><span data-count="7" data-decimals="0">0</span></div>
+    <div class="trend">3 quishing · 4 phishing</div>
+  </div>
+
+  <div class="stat">
+    <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 1.8"/></svg></div>
+    <div class="lbl">Median latency</div>
+    <div class="num"><span data-count="186" data-decimals="0" data-suffix="ms">0</span></div>
+    <div class="trend">p95 &nbsp;241 ms</div>
+  </div>
+
+  <div class="stat">
+    <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.4 9.4 8 10 4.6-.6 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/></svg></div>
+    <div class="lbl">Evidence sealed</div>
+    <div class="num"><span data-count="24" data-decimals="0">0</span></div>
+    <div class="trend">SHA-256 chain intact</div>
+  </div>
+</div>
+
+<!-- ============ RECENT + EXPERT HEALTH ============ -->
+<div class="grid g-2" style="gap:1.5rem;align-items:start">
+
+  <!-- recent assessments -->
+  <div class="panel">
+    <div class="panel-title">
+      <span class="dot"></span>Recent assessments
+      <a href="{% url 'threat_console' %}" class="mono small" style="margin-left:auto">new scan →</a>
+    </div>
+
+    <div class="table-scroll">
+      <table class="data" style="min-width:520px">
+        <thead>
+          <tr>
+            <th>Symbol</th>
+            <th>Destination</th>
+            <th>Fired by</th>
+            <th>Risk</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>QR&#8202;·&#8202;0912</strong></td>
+            <td class="mono" style="font-size:.76rem">sbi-kyc-verify&#8230;xyz</td>
+            <td><span class="badge badge-rose">M-03 M-01</span></td>
+            <td><span class="badge badge-rose">91 critical</span></td>
+          </tr>
+          <tr>
+            <td><strong>QR&#8202;·&#8202;0911</strong></td>
+            <td class="mono" style="font-size:.76rem">paytm.com&#8202;/&#8202;secure-pay</td>
+            <td><span class="badge badge-green">—</span></td>
+            <td><span class="badge badge-green">08 safe</span></td>
+          </tr>
+          <tr>
+            <td><strong>QR&#8202;·&#8202;0909</strong></td>
+            <td class="mono" style="font-size:.76rem">bit.ly&#8202;/&#8202;3xQr9Scan</td>
+            <td><span class="badge badge-amber">M-04 M-02</span></td>
+            <td><span class="badge badge-amber">71 high</span></td>
+          </tr>
+          <tr>
+            <td><strong>QR&#8202;·&#8202;0907</strong></td>
+            <td class="mono" style="font-size:.76rem">192.168.44.13&#8202;/&#8202;upi</td>
+            <td><span class="badge badge-rose">M-03</span></td>
+            <td><span class="badge badge-rose">88 critical</span></td>
+          </tr>
+          <tr>
+            <td><strong>QR&#8202;·&#8202;0904</strong></td>
+            <td class="mono" style="font-size:.76rem">amazon.in&#8202;/&#8202;order</td>
+            <td><span class="badge badge-green">—</span></td>
+            <td><span class="badge badge-green">11 safe</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- expert health -->
+  <div class="grid" style="gap:1.25rem">
+
+    <div class="panel">
+      <div class="panel-title"><span class="dot"></span>Expert health · trailing 24h</div>
+
+      <div style="display:grid;gap:1rem">
+        <div>
+          <div class="mc-meta"><span>M-01 · Visual Forensics</span><b>99.1%</b></div>
+          <div class="bar green"><span style="width:99.1%"></span></div>
+        </div>
+        <div>
+          <div class="mc-meta"><span>M-02 · Payload Analyzer</span><b>97.8%</b></div>
+          <div class="bar green"><span style="width:97.8%"></span></div>
+        </div>
+        <div>
+          <div class="mc-meta"><span>M-03 · URL Feature Net</span><b>98.6%</b></div>
+          <div class="bar green"><span style="width:98.6%"></span></div>
+        </div>
+        <div>
+          <div class="mc-meta"><span>M-04 · Threat Intel Link</span><b style="color:var(--amber)">82.4%</b></div>
+          <div class="bar amber"><span style="width:82.4%"></span></div>
+        </div>
+      </div>
+
+      <div class="alert alert-warn" style="margin:1.3rem 0 0">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+        <span><strong class="strong">M-04 is degraded.</strong> The upstream intel feed is returning
+          partial data, so the fusion layer is down-weighting it and reporting reduced coverage
+          on every verdict it touches.</span>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title"><span class="dot"></span>Threat mix</div>
+      <div style="display:grid;gap:.75rem">
+        <div>
+          <div class="mc-meta"><span>Quishing · physical overlay</span><b>3</b></div>
+          <div class="bar rose"><span style="width:26%"></span></div>
+        </div>
+        <div>
+          <div class="mc-meta"><span>Credential phishing</span><b>5</b></div>
+          <div class="bar amber"><span style="width:44%"></span></div>
+        </div>
+        <div>
+          <div class="mc-meta"><span>Payment redirection</span><b>3</b></div>
+          <div class="bar violet" style="background:rgba(139,92,246,.08)"><span style="width:26%"></span></div>
+        </div>
+        <div>
+          <div class="mc-meta"><span>Benign · approved</span><b>13</b></div>
+          <div class="bar green"><span style="width:100%"></span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,164 @@
+{% extends "admin_base.html" %}
+
+{% block title %}Analyst Registry · AEGIS-QR{% endblock %}
+{% block crumb %}Admin Control / Registry{% endblock %}
+{% block page_title %}Analyst Registry{% endblock %}
+{% block nav_users %}active{% endblock %}
+
+{% block content %}
+
+<!-- ============ HEADER BAR ============ -->
+<div class="flex between center wrap" style="margin-bottom:1.5rem;gap:1rem">
+  <div>
+    <p class="muted small mb-0" style="max-width:56ch">
+      Every registered analyst, their verification state and the actions available to you.
+      New accounts stay locked until approved.
+    </p>
+  </div>
+  <div class="flex center" style="gap:.6rem">
+    <span class="badge badge-amber">{{ pending_count }} pending</span>
+    <a class="btn btn-ghost btn-sm" href="{% url 'admin_home' %}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+      Refresh
+    </a>
+  </div>
+</div>
+
+<!-- ============ REGISTRY TABLE ============ -->
+<div class="table-wrap" style="margin-bottom:1.5rem">
+  <div class="table-scroll">
+    <table class="data">
+      <thead>
+        <tr>
+          <th>Analyst</th>
+          <th>Email</th>
+          <th>Mobile</th>
+          <th>Photograph</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td>
+            <div class="flex center" style="gap:.75rem">
+              {% if user.image %}
+                <img class="avatar" src="{{ user.image.url }}" alt="{{ user.name }}">
+              {% else %}
+                <span class="avatar" style="display:grid;place-items:center;background:var(--grad-primary);color:#05070f;font-weight:800">
+                  {{ user.name|slice:":1"|upper }}
+                </span>
+              {% endif %}
+              <div>
+                <strong>{{ user.name }}</strong>
+                <div class="mono small muted">ID&#8202;#{{ user.id }}</div>
+              </div>
+            </div>
+          </td>
+          <td class="mono" style="font-size:.8rem">{{ user.email }}</td>
+          <td class="mono" style="font-size:.8rem">{{ user.mobile }}</td>
+          <td>
+            {% if user.image %}
+              <a href="{{ user.image.url }}" target="_blank" rel="noopener">
+                <img class="avatar" src="{{ user.image.url }}" alt="{{ user.name }}" style="width:34px;height:34px;border-radius:10px">
+              </a>
+            {% else %}
+              <span class="muted small">—</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if user.is_active %}
+              <span class="status on">Active</span>
+            {% else %}
+              <span class="status off">Pending</span>
+            {% endif %}
+          </td>
+          <td>
+            <div class="cell-actions">
+              {% if not user.is_active %}
+                <a class="btn btn-ok btn-sm" href="{% url 'activate_user' user.id %}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                  Activate
+                </a>
+              {% else %}
+                <a class="btn btn-ghost btn-sm" href="{% url 'deactivate_user' user.id %}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                  Suspend
+                </a>
+              {% endif %}
+              <a class="btn btn-danger btn-sm" href="{% url 'delete_user' user.id %}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+                Remove
+              </a>
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6">
+            <div class="empty">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 11v-2a4 4 0 0 0-4-4h-3"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/></svg>
+              <p>No analysts have registered yet.<br>
+                 New registrations will appear here for approval.</p>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ============ POLICY ============ -->
+<div class="grid g-3">
+
+  <div class="panel">
+    <div class="panel-title"><span class="dot"></span>Onboarding policy</div>
+    <ul class="acc-list" style="margin:0">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Accounts are created inactive by default</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Photograph is required for identity proof</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Activation is a manual administrator action</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Removal is permanent and irreversible</li>
+    </ul>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title"><span class="dot"></span>Registry breakdown</div>
+    <div style="display:grid;gap:.75rem">
+      <div>
+        <div class="mc-meta"><span>Active</span><b>{{ active_count }}</b></div>
+        <div class="bar green"><span style="width:{% widthratio active_count total_count 100 %}%"></span></div>
+      </div>
+      <div>
+        <div class="mc-meta"><span>Pending approval</span><b>{{ pending_count }}</b></div>
+        <div class="bar amber"><span style="width:{% widthratio pending_count total_count 100 %}%"></span></div>
+      </div>
+      <div>
+        <div class="mc-meta"><span>Total registered</span><b>{{ total_count }}</b></div>
+        <div class="bar violet"><span style="width:100%"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title"><span class="dot"></span>Quick actions</div>
+    <div class="grid" style="gap:.6rem">
+      <a class="btn btn-ghost btn-block" href="{% url 'admin_home' %}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+        Back to overview
+      </a>
+      <a class="btn btn-ghost btn-block" href="{% url 'register' %}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+        Registration page
+      </a>
+      <a class="btn btn-danger btn-block" href="{% url 'user_logout' %}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
+        End admin session
+      </a>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

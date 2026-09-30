@@ -1,0 +1,137 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#04060f">
+    <title>{% block title %}Admin Control · AEGIS-QR{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%2304060f'/><g fill='none' stroke='%2322d3ee' stroke-width='7'><path d='M22 22h20v20H22z'/><path d='M58 22h20v20H58z'/><path d='M22 58h20v20H22z'/></g><path d='M58 58h20v20H58z' fill='%238b5cf6'/></svg>">
+</head>
+<body>
+
+<div class="top-beam"></div>
+<div class="fx"></div>
+<div class="fx-grid"></div>
+<div class="fx-orb a"></div>
+<div class="fx-orb b"></div>
+<canvas id="fx-canvas"></canvas>
+<div class="fx-scan"></div>
+
+<div class="side-scrim" data-scrim></div>
+
+<div class="dash">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="side" data-side>
+
+    <a class="side-brand" href="{% url 'admin_home' %}">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M3 14h7v7H3z"/><path d="M14 14h3v3h-3z"/><path d="M18 18h3v3h-3z"/>
+        </svg>
+      </span>
+      <span class="brand-text">
+        <span class="brand-name">AEGIS&#8202;·&#8202;QR</span>
+        <span class="brand-sub">Admin Control</span>
+      </span>
+    </a>
+
+    <div class="side-group">
+      <div class="side-label">Administration</div>
+
+      <a class="side-link {% block nav_home %}{% endblock %}" href="{% url 'admin_home' %}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+        Overview
+      </a>
+
+      <a class="side-link {% block nav_users %}{% endblock %}" href="{% url 'admin_dashboard' %}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 11v-2a4 4 0 0 0-4-4h-3"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/></svg>
+        Analyst Registry
+      </a>
+
+      <span class="side-link" style="opacity:.4;cursor:not-allowed">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg>
+        Model Weights
+        <span class="mono" style="margin-left:auto;font-size:.6rem">soon</span>
+      </span>
+
+      <span class="side-link" style="opacity:.4;cursor:not-allowed">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg>
+        Audit Trail
+        <span class="mono" style="margin-left:auto;font-size:.6rem">soon</span>
+      </span>
+    </div>
+
+    <div class="side-group">
+      <div class="side-label">Platform</div>
+      <a class="side-link" href="{% url 'home' %}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        Public Overview
+      </a>
+      <a class="side-link" href="{% url 'home' %}#architecture">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v6H4z"/><path d="M4 14h7v6H4z"/><path d="M15 14h5v6h-5z"/></svg>
+        Architecture
+      </a>
+    </div>
+
+    <div class="side-foot">
+      <div class="panel" style="padding:.9rem 1rem;margin-bottom:.9rem">
+        <div class="panel-title" style="margin-bottom:.7rem;font-size:.72rem"><span class="dot"></span>System</div>
+        <div class="mc-meta"><span>api</span><b style="color:var(--emerald)">operational</b></div>
+        <div class="mc-meta"><span>fusion</span><b style="color:var(--emerald)">calibrated</b></div>
+        <div class="mc-meta"><span>intel feed</span><b style="color:var(--amber)">degraded</b></div>
+      </div>
+      <a class="side-link" href="{% url 'user_logout' %}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
+        Sign out
+      </a>
+    </div>
+
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="dash-main">
+
+    <header class="dash-top">
+      <button class="btn btn-ghost btn-sm side-trigger" data-side-trigger style="display:none" aria-label="Open navigation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+
+      <div style="min-width:0">
+        <div class="crumb">{% block crumb %}Admin Control{% endblock %}</div>
+        <h1>{% block page_title %}Administration{% endblock %}</h1>
+      </div>
+
+      <div class="flex center" style="margin-left:auto;gap:.75rem">
+        {% block top_actions %}{% endblock %}
+        <div class="chip-user">
+          <span style="width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--grad-primary);color:#05070f;font-weight:800;font-size:.8rem">A</span>
+          <span class="nm">Administrator</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="dash-body">
+      {% block content %}{% endblock %}
+    </div>
+
+    <footer class="footer" style="margin-top:0">
+      <div class="shell-wide" style="padding-inline:0">
+        <div class="footer-bot" style="margin:0;padding-top:0;border:0">
+          <span>&copy; {% now "Y" %} AEGIS&#8202;·&#8202;QR · Multi-Model Intelligence for Adaptive QR Threat Assessment</span>
+          <span class="mono">admin session · audited</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+</div>
+
+<script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>

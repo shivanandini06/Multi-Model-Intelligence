@@ -1,0 +1,586 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}AEGIS-QR · A Multi-Model Intelligence Architecture for Adaptive QR Threat Assessment{% endblock %}
+
+{% block content %}
+
+<!-- ==================== HERO ==================== -->
+<section class="hero">
+  <div class="shell hero-inner">
+
+    <div class="hero-copy">
+      <span class="hero-eyebrow fade-up">
+        <span class="pulse"></span>
+        Quishing &amp; QR-Jacking Defense Platform
+      </span>
+
+      <h1 class="fade-up d-1">
+        A Multi-Model
+        <span class="line2 grad-text">Intelligence Architecture</span>
+        for Adaptive
+        <span class="line2 grad-text">QR Threat Assessment</span>
+      </h1>
+
+      <span class="hero-title-tag fade-up d-2">
+        AEGIS&#8202;·&#8202;QR — four specialised models, one adaptive fusion engine,
+        one calibrated verdict in under 200&nbsp;milliseconds.
+      </span>
+
+      <p class="hero-sub fade-up d-3">
+        Static scanners read a symbol and stop at the string inside it. AEGIS&#8202;·&#8202;QR
+        looks at <em>how</em> the code was made, <em>what</em> it carries, <em>how</em> the
+        destination is structured, and <em>what</em> the wider intelligence graph already knows —
+        then re-weights itself per scan so no single model can dominate the verdict.
+      </p>
+
+      <div class="btn-row fade-up d-4">
+        <a class="btn btn-primary btn-lg" href="{% url 'user_login' %}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3.2"/></svg>
+          Launch Analyst Console
+        </a>
+        <a class="btn btn-ghost btn-lg" href="#architecture">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v6H4z"/><path d="M4 14h7v6H4z"/><path d="M15 14h5v6h-5z"/></svg>
+          View Architecture
+        </a>
+      </div>
+
+      <div class="hero-stats fade-up d-5">
+        <div>
+          <div class="n"><span data-count="4" data-decimals="0">0</span></div>
+          <div class="l">Specialist Models</div>
+        </div>
+        <div>
+          <div class="n"><span data-count="40" data-decimals="0" data-suffix="+">0</span></div>
+          <div class="l">URL Features</div>
+        </div>
+        <div>
+          <div class="n"><span data-count="186" data-decimals="0" data-suffix="ms">0</span></div>
+          <div class="l">Median Verdict</div>
+        </div>
+        <div>
+          <div class="n"><span data-count="97.4" data-decimals="1" data-suffix="%">0</span></div>
+          <div class="l">Quishing Recall</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QR scanner visual -->
+    <div class="qr-stage fade-up d-3">
+      <div class="qr-corner-halo"></div>
+
+      <div class="qr-frame">
+        <i></i><i></i><i></i><i></i>
+        <div class="qr-code">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="off"></span><span></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span></span><span class="off"></span><span class="off"></span><span></span><span></span><span class="off"></span><span></span><span class="off"></span><span></span><span></span><span></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span></span><span class="off"></span><span></span><span></span><span></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span></span><span class="off"></span><span></span><span></span><span></span><span class="off"></span><span></span><span></span><span class="off"></span><span></span><span></span><span></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span></span><span></span><span></span><span class="off"></span><span class="off"></span><span></span><span></span><span></span><span></span><span></span><span class="off"></span><span></span><span></span><span></span><span class="off"></span><span></span><span></span><span class="off"></span><span></span><span></span><span></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span></span><span></span><span class="off"></span><span></span><span></span><span class="off"></span><span></span><span></span><span class="off"></span><span></span><span></span><span></span><span class="off"></span><span></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="off"></span><span></span><span class="off"></span><span></span><span class="off"></span><span></span><span class="off"></span><span></span><span class="off"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span></span><span></span><span></span><span></span><span></span><span class="off"></span><span class="off"></span><span></span><span></span><span></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span></span><span class="off"></span><span></span><span></span><span></span><span></span><span></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span></span><span></span><span class="off"></span><span></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span></span><span></span><span></span><span></span><span></span><span class="off"></span><span class="off"></span><span></span><span></span><span class="off"></span><span></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span></span><span></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span></span><span></span><span class="off"></span><span class="off"></span><span></span><span></span><span></span><span></span><span class="off"></span><span></span><span></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span></span><span class="off"></span><span></span><span></span><span class="off"></span><span class="off"></span><span></span><span></span><span class="off"></span><span></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span></span><span></span><span></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span></span><span></span><span></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span></span><span class="off"></span><span></span><span></span><span class="off"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span></span><span></span><span></span><span class="off"></span><span></span><span></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span></span><span></span><span></span><span class="off"></span><span></span><span></span><span></span><span class="off"></span><span></span><span></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span></span><span class="off"></span><span></span><span class="off"></span><span></span><span></span><span class="off"></span><span></span><span></span><span class="off"></span><span></span><span></span><span></span><span class="off"></span><span></span><span></span><span></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span></span><span></span><span class="off"></span><span></span><span></span><span></span><span class="off"></span><span></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span></span><span class="off"></span><span></span><span></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span class="off"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="off"></span><span></span><span></span><span></span><span></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span></span><span></span><span class="off"></span><span class="off"></span><span></span><span class="off"></span><span class="off"></span>
+        </div>
+      </div>
+
+      <div class="qr-hud h1"><span class="led"></span>DECODE OK</div>
+      <div class="qr-hud h2">payload&#8202;·&#8202;str</div>
+      <div class="qr-hud h3">ViT&#8202;·&#8202;visual</div>
+      <div class="qr-hud h4 alert"><span class="led"></span>RISK&#8202;82</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================== THE PROBLEM ==================== -->
+<section class="section-tight">
+  <div class="shell">
+    <div class="grid g-3">
+
+      <article class="card card-hover reveal" data-delay="0">
+        <div class="card-icon rose">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+        </div>
+        <h3>The Old Model Fails</h3>
+        <p>Legacy scanners decode a QR and pattern-match the string. Homoglyph domains, short
+           links and redirect chains slip straight through a blocklist built for email URLs.</p>
+      </article>
+
+      <article class="card card-hover reveal" data-delay="90">
+        <div class="card-icon amber">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 1.9"/></svg>
+        </div>
+        <h3>Zero-Day &amp; Quishing</h3>
+        <p>A freshly printed sticker over a café table has never been seen by any feed.
+           Signatures, reputation lists and ML heuristics all fail on first contact.</p>
+      </article>
+
+      <article class="card card-hover reveal" data-delay="180">
+        <div class="card-icon violet">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="4.5"/><path d="m5.6 5.6 2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/></svg>
+        </div>
+        <h3>Single-Model Blindspots</h3>
+        <p>One classifier inherits one training set and one failure mode. Adversaries learn
+           the model faster than the model learns the adversary.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ARCHITECTURE ==================== -->
+<section class="section" id="architecture">
+  <div class="shell">
+
+    <div class="sec-head center">
+      <span class="eyebrow reveal">The Architecture</span>
+      <h2 class="reveal" data-delay="60">From symbol to verdict, in one adaptive pass</h2>
+      <p class="lead lead-wide reveal" data-delay="120" style="margin-inline:auto">
+        A single symbol fans out into four independent expert models, then re-converges on a
+        fusion layer that re-weights each expert based on its live confidence and agreement
+        with the others. The result is a calibrated 0–100 risk score, not a binary flag.
+      </p>
+    </div>
+
+    <div class="grid g-2" style="gap:2.5rem;align-items:start">
+
+      <!-- left: the flow diagram -->
+      <div class="reveal" data-delay="60">
+        <div class="arch-flow">
+
+          <div class="arch-node src">
+            <h4>STAGE 01 · INGEST</h4>
+            <p>Multi-format QR capture → deblur → Reed–Solomon decode → payload extraction</p>
+          </div>
+
+          <div class="arch-link"></div>
+
+          <!-- model bank (fan-out) -->
+          <div class="arch-fan">
+            <div class="model-chip">
+              <div class="mc-top">
+                <div class="mc-ico">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM18 18h3v3h-3z"/></svg>
+                </div>
+                <h5>Visual Forensics</h5>
+              </div>
+              <p>CNN + ViT over the symbol artwork itself.</p>
+              <div class="mc-meta"><span>signal</span><b>w 0.24</b></div>
+              <div class="bar" data-bar="72"><span></span></div>
+            </div>
+
+            <div class="model-chip">
+              <div class="mc-top">
+                <div class="mc-ico">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h13"/></svg>
+                </div>
+                <h5>Payload Analyzer</h5>
+              </div>
+              <p>Grammar, obfuscation and keyword rules.</p>
+              <div class="mc-meta"><span>signal</span><b>w 0.22</b></div>
+              <div class="bar" data-bar="58"><span></span></div>
+            </div>
+
+            <div class="model-chip">
+              <div class="mc-top">
+                <div class="mc-ico">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>
+                </div>
+                <h5>URL Feature Net</h5>
+              </div>
+              <p>XGBoost over 40+ structural features.</p>
+              <div class="mc-meta"><span>signal</span><b>w 0.30</b></div>
+              <div class="bar" data-bar="84"><span></span></div>
+            </div>
+
+            <div class="model-chip">
+              <div class="mc-top">
+                <div class="mc-ico">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></svg>
+                </div>
+                <h5>Threat Intel Link</h5>
+              </div>
+              <p>Domain age, WHOIS, blocklist &amp; graph feeds.</p>
+              <div class="mc-meta"><span>signal</span><b>w 0.24</b></div>
+              <div class="bar" data-bar="66"><span></span></div>
+            </div>
+          </div>
+
+          <div class="arch-link"></div>
+
+          <div class="arch-node fuse">
+            <h4>STAGE 02 · ADAPTIVE FUSION ENGINE</h4>
+            <p>Calibration · confidence gating · agreement-weighted blend ·
+               noisy-OR channel · decisive-expert floor</p>
+            <div class="tag-row" style="justify-content:center;margin-top:.9rem">
+              <span class="badge badge-cyan">Gated Experts</span>
+              <span class="badge badge-violet">Weighted Blend</span>
+              <span class="badge badge-green">Noisy-OR</span>
+            </div>
+          </div>
+
+          <div class="arch-link"></div>
+
+          <div class="arch-node out">
+            <h4>STAGE 03 · VERDICT &amp; ACTION</h4>
+            <p>Risk score 0–100 · severity tier · analyst rationale · evidence hash</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- right: explanation panels -->
+      <div class="reveal" data-delay="140">
+
+        <div class="verdict medium" style="margin-bottom:1.25rem">
+          <div class="gauge medium">
+            <svg viewBox="0 0 120 120">
+              <circle class="track" cx="60" cy="60" r="50"/>
+              <circle class="prog" cx="60" cy="60" r="50" data-gauge="78"/>
+            </svg>
+            <div class="val">78<small>/100</small></div>
+          </div>
+          <div class="verdict-text">
+            <h3>Elevated Risk · Suspicious</h3>
+            <p>Sample verdict for a look-alike KYC domain. Two experts agree strongly, two
+               abstain — fusion narrows to the confident pair and reports reduced coverage.</p>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-bottom:1.25rem">
+          <div class="panel-title"><span class="dot"></span>Why fusion is adaptive</div>
+          <p class="small" style="color:var(--text-soft)">
+            Static ensembles average every expert equally, so one overconfident model can veto
+            a correct one. AEGIS&#8202;·&#8202;QR instead runs four explicit stages on every scan:
+            a <strong class="strong">tanh calibration</strong> that stops a noisy model from
+            saturating at 1.0, a <strong class="strong">confidence gate</strong> that drops
+            experts below 0.20, an <strong class="strong">agreement-weighted blend</strong> over
+            the survivors, and a <strong class="strong">noisy-OR channel</strong> computed on
+            gate-adjusted excess so a crowd of quiet models can never accumulate into a false
+            alarm. A single near-certain expert (&#8805;&#8202;0.85) triggers a
+            <strong class="strong">decisive floor</strong> the average cannot dilute.
+            Gated experts and a triggered floor are both reported to the analyst — an honest
+            low-coverage verdict beats a false certainty.
+          </p>
+          <div class="mc-meta" style="margin-top:1rem">
+            <span>active experts this scan</span><b id="activeExperts">4 / 4</b>
+          </div>
+          <div class="bar"><span data-bar="100" style="width:100%"></span></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title"><span class="dot"></span>Risk severity tiers</div>
+          <div class="legend">
+            <div class="legend-row"><span class="sw" style="background:var(--risk-safe)"></span>Safe — trusted destination<span class="rng">0 – 24</span></div>
+            <div class="legend-row"><span class="sw" style="background:var(--risk-low)"></span>Low — proceed with caution<span class="rng">25 – 49</span></div>
+            <div class="legend-row"><span class="sw" style="background:var(--risk-medium)"></span>Medium — verify independently<span class="rng">50 – 69</span></div>
+            <div class="legend-row"><span class="sw" style="background:var(--risk-high)"></span>High — do not scan<span class="rng">70 – 84</span></div>
+            <div class="legend-row"><span class="sw" style="background:var(--risk-critical)"></span>Critical — escalate &amp; block<span class="rng">85 – 100</span></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================== MODEL BANK ==================== -->
+<section class="section" id="models" style="background:linear-gradient(180deg,transparent,rgba(139,92,246,.05),transparent)">
+  <div class="shell">
+
+    <div class="sec-head center">
+      <span class="eyebrow reveal">The Model Bank</span>
+      <h2 class="reveal" data-delay="60">Four experts, four blind spots, zero single points of failure</h2>
+      <p class="lead lead-wide reveal" data-delay="120" style="margin-inline:auto">
+        Each model is deliberately chosen to fail on inputs its peers catch. The architecture's
+        accuracy is a property of the disagreement between them — not of any one of them.
+      </p>
+    </div>
+
+    <div class="grid g-2">
+
+      <article class="card model-card card-hover reveal" data-delay="0">
+        <span class="acc"></span>
+        <span class="arch-tag">M-01</span>
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM18 18h3v3h-3z"/></svg>
+        </div>
+        <h3>Visual Forensics Network</h3>
+        <p>A dual-branch <strong class="strong">CNN + Vision Transformer</strong> ensemble trained on
+           printed, screen-rendered and sticker-overlaid symbols. It reads the <em>artifact</em>,
+           never the payload — so a QR that carries a perfectly clean link still gets flagged if
+           the code was physically pasted over a legitimate label.</p>
+        <ul class="acc-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Detects logo-swap and overlay tampering</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Finds halftone &amp; re-printing residue</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Blind to shortener &amp; redirect abuse</li>
+        </ul>
+      </article>
+
+      <article class="card model-card card-hover reveal" data-delay="90">
+        <span class="acc"></span>
+        <span class="arch-tag">M-02</span>
+        <div class="card-icon violet">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h13"/></svg>
+        </div>
+        <h3>Payload Grammar Analyzer</h3>
+        <p>A hybrid <strong class="strong">rule engine + lightweight classifier</strong> over the
+           decoded string. It reasons about <em>intent</em> — credential lures, UPI collect traps,
+           fake lottery and parcel-scam phrasing, obfuscated unicode and punycode — rather than
+           about which characters appear.</p>
+        <ul class="acc-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Intent &amp; social-engineering keyword scoring</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Unicode, homoglyph and nesting deobfuscation</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Sees through a single redirect hop</li>
+        </ul>
+      </article>
+
+      <article class="card model-card card-hover reveal" data-delay="180">
+        <span class="acc"></span>
+        <span class="arch-tag">M-03</span>
+        <div class="card-icon amber">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>
+        </div>
+        <h3>URL Feature Network</h3>
+        <p>An <strong class="strong">XGBoost classifier</strong> over 40+ lexical and structural
+           features engineered from known phishing corpora: entropy, token count, subdomain depth,
+           digit ratio, brand-token injection, scheme, TLD reputation and path shape.</p>
+        <ul class="acc-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Highest raw precision on novel domains</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Interpretable feature attributions per verdict</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Cannot judge physical tampering</li>
+        </ul>
+      </article>
+
+      <article class="card model-card card-hover reveal" data-delay="270">
+        <span class="acc"></span>
+        <span class="arch-tag">M-04</span>
+        <div class="card-icon green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></svg>
+        </div>
+        <h3>Threat Intelligence Link</h3>
+        <p>A live <strong class="strong">knowledge-graph resolver</strong> joining domain
+           registration age, WHOIS registrant entropy, certificate history, community blocklists
+           and co-occurrence with known malicious infrastructure.</p>
+        <ul class="acc-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Flags 3-day-old domains instantly</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Expands shorteners to true destination</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>No coverage on isolated private hosts</li>
+        </ul>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PIPELINE ==================== -->
+<section class="section" id="pipeline">
+  <div class="shell">
+    <div class="grid g-2" style="gap:3rem;align-items:start">
+
+      <div class="reveal">
+        <span class="eyebrow">Assessment Pipeline</span>
+        <h2>Five stages between camera and verdict</h2>
+        <p class="lead">
+          Every stage is independently auditable. The analyst sees which stage raised the
+          score, which model fired, and how much coverage the fusion layer actually had.
+        </p>
+
+        <div class="panel" style="margin-top:2rem">
+          <div class="panel-title"><span class="dot"></span>Ensemble trace · live sample</div>
+          <div class="kv">
+            <div class="kv-row"><span class="k">Ingest latency</span><span class="v mono">38 ms</span></div>
+            <div class="kv-row"><span class="k">Decode confidence</span><span class="v mono">0.994</span></div>
+            <div class="kv-row"><span class="k">Experts active</span><span class="v mono">3 / 4</span></div>
+            <div class="kv-row"><span class="k">Gated out</span><span class="v mono">M-04 · intel (no graph hit)</span></div>
+            <div class="kv-row"><span class="k">Fused risk</span><span class="v mono" style="color:var(--amber)">78 / 100</span></div>
+            <div class="kv-row"><span class="k">Confidence band</span><span class="v mono">± 4.1</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pipeline reveal" data-delay="120">
+
+        <div class="pipe-step">
+          <div class="pipe-rail">
+            <div class="pipe-node">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3.2"/></svg>
+            </div>
+            <div class="pipe-line"></div>
+          </div>
+          <div class="pipe-body">
+            <h3>Capture &amp; Normalise</h3>
+            <p>Live camera, uploaded still or screenshot. De-moire, de-blur and perspective
+               rectify before a single pixel reaches the model bank.</p>
+            <div class="pipe-meta">
+              <span class="badge">multi-format</span>
+              <span class="badge">38 ms</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pipe-step">
+          <div class="pipe-rail">
+            <div class="pipe-node">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M3 14h7v7H3z"/></svg>
+            </div>
+            <div class="pipe-line"></div>
+          </div>
+          <div class="pipe-body">
+            <h3>Symbol Decode &amp; Extraction</h3>
+            <p>Locate all finder patterns, correct the perspective, run Reed–Solomon error
+               correction and emit the raw payload string plus encoding metadata.</p>
+            <div class="pipe-meta">
+              <span class="badge badge-cyan">RS ECC</span>
+              <span class="badge">0.994 conf</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pipe-step">
+          <div class="pipe-rail">
+            <div class="pipe-node">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg>
+            </div>
+            <div class="pipe-line"></div>
+          </div>
+          <div class="pipe-body">
+            <h3>Parallel Expert Inference</h3>
+            <p>All four models run concurrently on the same input — symbol image, decoded
+               payload, extracted host and intel graph query — each returning a calibrated
+               malicious-signal probability.</p>
+            <div class="pipe-meta">
+              <span class="badge badge-violet">M-01 · M-04</span>
+              <span class="badge badge-cyan">concurrent</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pipe-step">
+          <div class="pipe-rail">
+            <div class="pipe-node">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="9"/></svg>
+            </div>
+            <div class="pipe-line"></div>
+          </div>
+          <div class="pipe-body">
+            <h3>Adaptive Fusion &amp; Calibration</h3>
+            <p>Confidence gates drop unreliable experts, the remainder is blended by
+               agreement-weighted softmax, a noisy-OR channel on gate-adjusted excess
+               preserves any decisive signal, and a tanh calibration head maps the
+               result onto a calibrated 0–100 scale.</p>
+            <div class="pipe-meta">
+              <span class="badge badge-green">gated</span>
+              <span class="badge">186 ms total</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pipe-step">
+          <div class="pipe-rail">
+            <div class="pipe-node">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.4 9.4 8 10 4.6-.6 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+          </div>
+          <div class="pipe-body">
+            <h3>Verdict, Rationale &amp; Evidence</h3>
+            <p>A severity tier, a plain-language rationale naming the fired signals, and a
+               SHA-256 hash of the captured symbol are written to the evidence vault for audit.</p>
+            <div class="pipe-meta">
+              <span class="badge badge-rose">SHA-256</span>
+              <span class="badge">immutable log</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CAPABILITIES ==================== -->
+<section class="section" id="capabilities">
+  <div class="shell">
+
+    <div class="sec-head center">
+      <span class="eyebrow reveal">Capabilities</span>
+      <h2 class="reveal" data-delay="60">Built for analysts, not just end users</h2>
+    </div>
+
+    <div class="grid g-3">
+      <article class="card card-hover reveal" data-delay="0">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg>
+        </div>
+        <h3>Continuous Drift Tracking</h3>
+        <p>Per-expert precision/recall is tracked on live traffic. An expert that silently
+           degrades is down-weighted by the fusion layer within one assessment window.</p>
+      </article>
+
+      <article class="card card-hover reveal" data-delay="80">
+        <div class="card-icon violet">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18"/><rect x="3" y="3" width="18" height="18" rx="3"/></svg>
+        </div>
+        <h3>Explainable by Construction</h3>
+        <p>Every score decomposes into named, inspectable signals — no black box between the
+           symbol and the analyst's decision.</p>
+      </article>
+
+      <article class="card card-hover reveal" data-delay="160">
+        <div class="card-icon rose">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.4 9.4 8 10 4.6-.6 8-5 8-10V6z"/></svg>
+        </div>
+        <h3>Chain-of-Custody Vault</h3>
+        <p>Every capture is SHA-256 hashed on ingest. Later verification proves the assessed
+           symbol is byte-identical to the one that was scanned.</p>
+      </article>
+
+      <article class="card card-hover reveal" data-delay="0">
+        <div class="card-icon green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8"/></svg>
+        </div>
+        <h3>Multi-Format Ingest</h3>
+        <p>Live camera, uploaded image, PDF screenshot or clipboard payload. Every route ends
+           at the same normalised symbol representation.</p>
+      </article>
+
+      <article class="card card-hover reveal" data-delay="80">
+        <div class="card-icon amber">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 1.8"/></svg>
+        </div>
+        <h3>Sub-200ms Verdicts</h3>
+        <p>Experts run concurrently with a fused, calibrated response fast enough to sit in
+           the path of a real-world scan — before the user taps anything.</p>
+      </article>
+
+      <article class="card card-hover reveal" data-delay="160">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/></svg>
+        </div>
+        <h3>Role-Scoped Workspaces</h3>
+        <p>Analyst, administrator and auditor each get a purpose-built surface over the same
+           assessment record.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CTA ==================== -->
+<section class="section-tight">
+  <div class="shell">
+    <div class="card reveal" style="text-align:center;padding:clamp(2rem,5vw,3.5rem)">
+      <span class="badge badge-cyan" style="margin-bottom:1.2rem">Ready when you are</span>
+      <h2 style="max-width:24ch;margin-inline:auto">Put the ensemble in front of the next scan</h2>
+      <p class="lead" style="margin:0 auto 1.8rem">
+        Register an analyst account, sign in, and run live assessments through the console.
+        Every verdict is hashed, timestamped and stored for review.
+      </p>
+      <div class="btn-row" style="justify-content:center">
+        <a class="btn btn-primary btn-lg" href="{% url 'register' %}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+          Create Analyst Account
+        </a>
+        <a class="btn btn-ghost btn-lg" href="{% url 'admin_login' %}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Administrator Access
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

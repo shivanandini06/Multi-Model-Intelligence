@@ -1,0 +1,181 @@
+{% extends "admin_base.html" %}
+
+{% block title %}Admin Overview · AEGIS-QR{% endblock %}
+{% block crumb %}Admin Control{% endblock %}
+{% block page_title %}Administration Overview{% endblock %}
+{% block nav_home %}active{% endblock %}
+
+{% block content %}
+
+<!-- ============ ALERT BANNER ============ -->
+<div class="alert alert-warn" style="margin-bottom:1.5rem">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+  <span><strong class="strong">M-04 · Threat Intel Link is degraded.</strong>
+    The upstream intelligence feed is returning partial graph data. The fusion layer is
+    compensating with a widened confidence band, but verdict coverage is reduced until the
+    feed recovers.</span>
+</div>
+
+<!-- ============ STATS ============ -->
+<div class="stat-grid" style="margin-bottom:1.5rem">
+  <div class="stat">
+    <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+    <div class="lbl">Registered analysts</div>
+    <div class="num"><span data-count="148" data-decimals="0">0</span></div>
+    <div class="trend">+11 this month</div>
+  </div>
+
+  <div class="stat">
+    <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.4 9.4 8 10 4.6-.6 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/></svg></div>
+    <div class="lbl">Active accounts</div>
+    <div class="num"><span data-count="132" data-decimals="0">0</span></div>
+    <div class="trend">16 pending approval</div>
+  </div>
+
+  <div class="stat">
+    <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3.2"/></svg></div>
+    <div class="lbl">Assessments today</div>
+    <div class="num"><span data-count="3219" data-decimals="0">0</span></div>
+    <div class="trend">across all analysts</div>
+  </div>
+
+  <div class="stat">
+    <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.4 9.4 8 10 4.6-.6 8-5 8-10V6z"/><path d="M12 8v5"/></svg></div>
+    <div class="lbl">Threats blocked</div>
+    <div class="num"><span data-count="263" data-decimals="0">0</span></div>
+    <div class="trend">8.2% of all scans</div>
+  </div>
+</div>
+
+<!-- ============ OVERVIEW + EXPERT HEALTH ============ -->
+<div class="grid" style="grid-template-columns:1.15fr .85fr;gap:1.5rem;align-items:start;margin-bottom:1.5rem">
+
+  <div class="card">
+    <span class="badge badge-rose" style="margin-bottom:1.1rem">restricted zone</span>
+    <h2 style="font-size:clamp(1.4rem,2.4vw,1.9rem)">Control plane</h2>
+    <p class="lead" style="margin-bottom:1.6rem">
+      You are signed in with administrative privileges. From here you manage the analyst
+      registry, inspect ensemble health and govern access to the evidence vault.
+    </p>
+
+    <div class="grid g-2" style="gap:1rem">
+      <a class="card card-hover" href="{% url 'admin_dashboard' %}" style="padding:1.3rem">
+        <div class="card-icon" style="margin-bottom:.85rem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 11v-2a4 4 0 0 0-4-4h-3"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/></svg>
+        </div>
+        <h3>Analyst Registry</h3>
+        <p>Approve, suspend or remove accounts. Review registration detail and activation state.</p>
+      </a>
+
+      <div class="card" style="padding:1.3rem;opacity:.55">
+        <div class="card-icon violet" style="margin-bottom:.85rem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg>
+        </div>
+        <h3>Model Weights</h3>
+        <p>Tune fusion weights and gating thresholds. <span class="badge" style="margin-top:.5rem">coming soon</span></p>
+      </div>
+
+      <div class="card" style="padding:1.3rem;opacity:.55">
+        <div class="card-icon amber" style="margin-bottom:.85rem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg>
+        </div>
+        <h3>Audit Trail</h3>
+        <p>Immutable log of administrative actions. <span class="badge" style="margin-top:.5rem">coming soon</span></p>
+      </div>
+
+      <a class="card card-hover" href="{% url 'home' %}#architecture" style="padding:1.3rem">
+        <div class="card-icon green" style="margin-bottom:.85rem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v6H4z"/><path d="M4 14h7v6H4z"/><path d="M15 14h5v6h-5z"/></svg>
+        </div>
+        <h3>Architecture</h3>
+        <p>Reference the full multi-model pipeline and each expert's known blind spot.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="grid" style="gap:1.25rem">
+
+    <div class="panel">
+      <div class="panel-title"><span class="dot"></span>Ensemble health</div>
+      <div style="display:grid;gap:1rem">
+        <div>
+          <div class="mc-meta"><span>M-01 · Visual Forensics</span><b>99.1%</b></div>
+          <div class="bar green"><span style="width:99.1%"></span></div>
+        </div>
+        <div>
+          <div class="mc-meta"><span>M-02 · Payload Analyzer</span><b>97.8%</b></div>
+          <div class="bar green"><span style="width:97.8%"></span></div>
+        </div>
+        <div>
+          <div class="mc-meta"><span>M-03 · URL Feature Net</span><b>98.6%</b></div>
+          <div class="bar green"><span style="width:98.6%"></span></div>
+        </div>
+        <div>
+          <div class="mc-meta"><span>M-04 · Threat Intel Link</span><b style="color:var(--amber)">82.4%</b></div>
+          <div class="bar amber"><span style="width:82.4%"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title"><span class="dot"></span>Platform</div>
+      <div class="kv">
+        <div class="kv-row"><span class="k">Django</span><span class="v mono">5.2</span></div>
+        <div class="kv-row"><span class="k">Ensemble version</span><span class="v mono">v4.2.1</span></div>
+        <div class="kv-row"><span class="k">Calibration</span><span class="v mono">tanh · v4.2</span></div>
+        <div class="kv-row"><span class="k">Evidence hashing</span><span class="v mono">SHA-256</span></div>
+        <div class="kv-row"><span class="k">Storage</span><span class="v mono">SQLite3</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ PENDING APPROVALS ============ -->
+<div class="panel">
+  <div class="panel-title">
+    <span class="dot"></span>Pending analyst approval
+    <a href="{% url 'admin_dashboard' %}" class="mono small" style="margin-left:auto">full registry →</a>
+  </div>
+
+  <div class="table-scroll">
+    <table class="data" style="min-width:640px">
+      <thead>
+        <tr>
+          <th>Analyst</th>
+          <th>Email</th>
+          <th>Mobile</th>
+          <th>Submitted</th>
+          <th>Decision</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for u in pending %}
+        <tr>
+          <td><strong>{{ u.name }}</strong></td>
+          <td class="mono" style="font-size:.78rem">{{ u.email }}</td>
+          <td class="mono" style="font-size:.78rem">{{ u.mobile }}</td>
+          <td class="muted">#{{ u.id }}</td>
+          <td>
+            <div class="cell-actions">
+              <a class="btn btn-ok btn-sm" href="{% url 'activate_user' u.id %}">Approve</a>
+              <a class="btn btn-danger btn-sm" href="{% url 'delete_user' u.id %}">Reject</a>
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5">
+            <div class="empty">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+              <p>No analysts are awaiting approval. New registrations appear here automatically.</p>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

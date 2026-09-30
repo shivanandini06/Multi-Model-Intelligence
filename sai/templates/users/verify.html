@@ -1,0 +1,96 @@
+{% extends "users/user_base.html" %}
+
+{% block title %}Evidence Vault · Verify · AEGIS-QR{% endblock %}
+{% block crumb %}Analyst Console / Evidence{% endblock %}
+{% block page_title %}Verify Evidence Integrity{% endblock %}
+
+{% block content %}
+<div class="grid" style="grid-template-columns:.85fr 1.15fr;gap:1.5rem;align-items:start">
+
+  <!-- left: rationale -->
+  <div class="grid" style="gap:1.25rem">
+    <div class="card">
+      <div class="card-icon violet">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.4 9.4 8 10 4.6-.6 8-5 8-10V6z"/><path d="M12 11v5"/></svg>
+      </div>
+      <h2 style="font-size:1.3rem">Chain-of-custody proof</h2>
+      <p class="lead" style="font-size:.94rem">
+        Re-submit a sealed file and the platform recomputes its digest. A match proves the
+        artefact is byte-identical to the one that produced a recorded verdict. A mismatch
+        means the file has been altered since intake.
+      </p>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title"><span class="dot"></span>How verification works</div>
+      <ul class="acc-list" style="margin:0">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Recompute SHA-256 over the uploaded bytes</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Search the vault for a matching digest</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Return the original verdict, analyst and timestamp</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Record the verification attempt either way</li>
+      </ul>
+    </div>
+
+    <a class="btn btn-ghost btn-block" href="{% url 'user_homepage' %}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+      Back to dashboard
+    </a>
+  </div>
+
+  <!-- right: form + result -->
+  <div class="panel">
+    <div class="panel-title"><span class="dot"></span>Re-submit a sealed file</div>
+
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="field">
+        <label for="file">File to verify</label>
+        <input class="input" type="file" id="file" name="file" required
+               accept=".jpg,.jpeg,.png,.pdf,.doc,.docx">
+        <p class="hint">Upload the exact file that was originally sealed.</p>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-lg btn-block">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        Verify integrity
+      </button>
+    </form>
+
+    {% if result %}
+      <div style="margin-top:1.6rem;padding-top:1.5rem;border-top:1px solid var(--stroke)">
+
+        {% if result.message %}
+          <div class="alert {% if 'match' in result.message|lower %}alert-ok{% else %}alert-err{% endif %}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">{% if 'match' in result.message|lower %}<circle cx="12" cy="12" r="9"/><path d="m9 12 2 2 4-4"/>{% else %}<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/>{% endif %}</svg>
+            <span>{{ result.message }}</span>
+          </div>
+        {% endif %}
+
+        {% if result.evidence %}
+          <div class="panel" style="padding:1.25rem">
+            <div class="panel-title"><span class="dot"></span>Evidence record</div>
+            <div class="kv">
+              <div class="kv-row"><span class="k">File name</span><span class="v">{{ result.evidence.file_name }}</span></div>
+              <div class="kv-row"><span class="k">Sealed by</span><span class="v">{{ result.evidence.uploaded_by.name }}</span></div>
+              <div class="kv-row"><span class="k">Sealed at</span><span class="v">{{ result.evidence.uploaded_at }}</span></div>
+            </div>
+
+            <div class="label" style="margin-top:1.2rem">SHA-256 digest</div>
+            <code class="hash">{{ result.evidence.hash_key }}</code>
+
+            <div class="flex" style="gap:.6rem;margin-top:1rem">
+              <button type="button" class="btn btn-ghost btn-sm" data-copy="{{ result.evidence.hash_key }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Copy digest
+              </button>
+            </div>
+          </div>
+        {% endif %}
+
+      </div>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}Administrator Access · AEGIS-QR{% endblock %}
+
+{% block content %}
+<div class="auth-wrap">
+
+  <!-- left: brand panel -->
+  <aside class="auth-aside">
+    <span class="hero-eyebrow" style="margin-bottom:1.3rem;border-color:rgba(251,113,133,.35);background:rgba(251,113,133,.08);color:#fecdd3">
+      <span class="pulse" style="background:var(--rose);box-shadow:var(--glow-rose)"></span>
+      Restricted Zone
+    </span>
+
+    <h1 style="font-size:clamp(1.7rem,3.4vw,2.6rem)">
+      Administration<br><span class="grad-text">control plane</span>
+    </h1>
+
+    <p class="lead" style="margin-bottom:2rem">
+      Administrator accounts manage analyst onboarding, activation policy and access to the
+      evidence vault. Every administrative action is recorded.
+    </p>
+
+    <div class="grid" style="gap:1rem;max-width:460px">
+      <div class="card" style="padding:1.15rem 1.3rem">
+        <div class="flex center" style="gap:.85rem">
+          <div class="card-icon rose" style="margin:0;width:38px;height:38px;border-radius:11px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M18 8h6M21 5v6"/></svg>
+          </div>
+          <div>
+            <strong class="strong" style="font-size:.92rem">Analyst lifecycle</strong>
+            <div class="small muted">Approve, suspend or remove registered analysts</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:1.15rem 1.3rem">
+        <div class="flex center" style="gap:.85rem">
+          <div class="card-icon violet" style="margin:0;width:38px;height:38px;border-radius:11px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg>
+          </div>
+          <div>
+            <strong class="strong" style="font-size:.92rem">Ensemble oversight</strong>
+            <div class="small muted">Monitor expert health and fusion-layer calibration</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:1.15rem 1.3rem">
+        <div class="flex center" style="gap:.85rem">
+          <div class="card-icon green" style="margin:0;width:38px;height:38px;border-radius:11px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M12 2 4 6v6c0 5 3.4 9.4 8 10 4.6-.6 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/></svg>
+          </div>
+          <div>
+            <strong class="strong" style="font-size:.92rem">Vault governance</strong>
+            <div class="small muted">Review hashed evidence and export audit records</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- right: form -->
+  <div class="auth-main">
+    <div class="auth-card">
+
+      <h1>Administrator login</h1>
+      <p class="sub">Authorised personnel only. Sessions are logged.</p>
+
+      {% if msg %}
+        <div class="alert alert-err">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+          <span>{{ msg }}</span>
+        </div>
+      {% endif %}
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+
+        <div class="field">
+          <label for="name">Administrator ID</label>
+          <div class="input-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <input class="input" type="text" id="name" name="name" placeholder="Administrator identifier" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="password">Passphrase</label>
+          <div class="input-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.4 9.4 8 10 4.6-.6 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/></svg>
+            <input class="input" type="password" id="password" name="password" placeholder="••••••••••" required>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg btn-block">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.4 9.4 8 10 4.6-.6 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/></svg>
+          Authenticate
+        </button>
+      </form>
+
+      <div class="divider-or">other access paths</div>
+
+      <div class="auth-alt">
+        <a href="{% url 'user_login' %}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          Analyst
+        </a>
+        <a href="{% url 'home' %}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          Overview
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

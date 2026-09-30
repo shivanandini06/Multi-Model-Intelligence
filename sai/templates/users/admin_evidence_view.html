@@ -1,0 +1,109 @@
+{% extends "admin_base.html" %}
+
+{% block title %}Evidence Vault · Admin · AEGIS-QR{% endblock %}
+{% block crumb %}Admin Control / Evidence{% endblock %}
+{% block page_title %}Evidence Vault{% endblock %}
+
+{% block content %}
+
+<!-- ============ HEADER ============ -->
+<div class="flex between center wrap" style="margin-bottom:1.5rem;gap:1rem">
+  <div>
+    <p class="muted small mb-0" style="max-width:60ch">
+      Every sealed artefact across the platform, with the digest that binds it to its verdict.
+      Records are immutable — removal requires a separate governance action.
+    </p>
+  </div>
+  <div class="flex center" style="gap:.6rem">
+    <span class="badge badge-cyan">{{ evidences|length }} record{{ evidences|length|pluralize }}</span>
+    <a class="btn btn-ghost btn-sm" href="{% url 'admin_dashboard' %}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+      Analyst registry
+    </a>
+  </div>
+</div>
+
+<!-- ============ TABLE ============ -->
+<div class="table-wrap">
+  <div class="table-scroll">
+    <table class="data">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Artefact</th>
+          <th>Sealed by</th>
+          <th>SHA-256 digest</th>
+          <th>Sealed at</th>
+          <th>Access</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for e in evidences %}
+        <tr>
+          <td><strong>#{{ e.id }}</strong></td>
+          <td class="mono" style="font-size:.8rem">{{ e.file_name }}</td>
+          <td>
+            <div class="flex center" style="gap:.55rem">
+              {% if e.uploaded_by.image %}
+                <img class="avatar" src="{{ e.uploaded_by.image.url }}" alt="{{ e.uploaded_by.name }}"
+                     style="width:28px;height:28px;border-radius:9px">
+              {% endif %}
+              <span>{{ e.uploaded_by.name }}</span>
+            </div>
+          </td>
+          <td>
+            <code class="mono" style="font-size:.72rem;color:var(--cyan-soft)">
+              {{ e.hash_key|slice:":20" }}…
+            </code>
+          </td>
+          <td class="mono muted" style="font-size:.78rem">{{ e.uploaded_at|date:"M d, Y H:i" }}</td>
+          <td>
+            <a class="btn btn-ghost btn-sm" href="{{ e.file.url }}" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7"/><circle cx="12" cy="12" r="3"/></svg>
+              Inspect
+            </a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6">
+            <div class="empty">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M3 14h7v7H3z"/><path d="M14 14h3v3h-3zM18 18h3v3h-3z"/></svg>
+              <p>The vault is empty.<br>
+                 Sealed artefacts appear here the moment an analyst ingests one.</p>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ============ INTEGRITY NOTE ============ -->
+<div class="grid g-2" style="gap:1.5rem;margin-top:1.5rem">
+
+  <div class="panel">
+    <div class="panel-title"><span class="dot"></span>Why digests matter</div>
+    <p class="small" style="color:var(--text-soft);margin-bottom:0">
+      A SHA-256 digest is a fixed-length fingerprint of a file's exact bytes. It cannot be
+      reverse-engineered, and changing a single pixel of a QR image produces a completely
+      different digest. Storing it alongside the artefact lets anyone later prove that the
+      file they are looking at is the exact file that was assessed — which is what turns a
+      screenshot into admissible evidence.
+    </p>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title"><span class="dot"></span>Retention policy</div>
+    <div class="kv">
+      <div class="kv-row"><span class="k">Storage class</span><span class="v">write-once</span></div>
+      <div class="kv-row"><span class="k">Digest algorithm</span><span class="v mono">SHA-256</span></div>
+      <div class="kv-row"><span class="k">Verdict linkage</span><span class="v">1 : 1</span></div>
+      <div class="kv-row"><span class="k">Deletion</span><span class="v">governance action</span></div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
